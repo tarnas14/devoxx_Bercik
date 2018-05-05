@@ -1,0 +1,147 @@
+<head>
+  <!-- include a-frame -->
+  <script src='./vendor/aframe/build/aframe.min.js'></script>
+
+  <script src='./vendor/a-mmd.js'></script>
+
+  <!-- include ar.js for aframe -->
+  <script src='./build/aframe-ar.js'></script>
+  <script>ARjs.Context.baseURL = './three.js/'</script>
+  <!-- include shadowonly-plane -->
+  <script src='./build/aframe-shadow-plane.js'></script>
+
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body style='margin : 0px; overflow: hidden;'>
+	<!-- Define your scene -->
+	<a-scene antialias="true" embedded arjs='trackingMethod: best;'>
+
+		<a-entity
+			light="type: ambient; color: #333">
+		</a-entity>
+	
+		<!-- Create a anchor to attach your augmented reality -->
+		<a-anchor hit-testing-enabled='true' shadow="type: pcfsoft">
+                        <a-entity scale='0.08 0.08 0.08' mmd>
+				<a-entity
+					mmd-model='model : models/miku/miku_v2.pmd; vmd : models/vmds/wavefile_v2.vmd;'
+					shadow="cast:true">
+				</a-entity>
+                        </a-entity>
+
+			<a-entity 
+				light="type: directional; color: #888; intensity: 0.9; castShadow:true; shadowCameraVisible: false; shadowMapWidth:2048; shadowMapHeight:2048;" 
+				position="-5 20 5">
+			</a-entity>
+			<!-- add shadow only ground -->
+			<a-entity shadowonly-plane='width: 3; height: 3; opacity: 0.4'></a-entity>
+                        <!-- <a-plane rotation="-90 0 0"
+                                color="#AAAAAA"
+                                opacity="0.5"
+                                height="15"
+                                width="15"
+                                shadow="receive:true">
+                        </a-plane> -->
+	                <!-- <a-circle				
+				rotation='-90 0 0'
+                                opacity='0.5'
+				src='url(../demo-firefox/images/UV_Grid_Sm.jpg)'
+				transparency='true'
+				radius='1'
+				shadow='receive:true'>
+			</a-circle> -->
+	                <!-- <a-entity				
+				rotation='-90 0 0'
+                                opacity="0.5"
+				src='url(../demo-firefox/images/transparent-texture.png)'
+				src='url(../demo-firefox/images/UV_Grid_Sm.jpg)'
+				radius="1.5"
+				shadow="receive:true">
+			</a-entity> -->
+
+		</a-anchor>
+		<!-- Define a static camera -->
+		<a-camera-static/>
+	</a-scene>
+  <img id="screenshot" src="" class="hide"/>
+  <canvas id="screenshotCanvas" class="hide"></canvas>
+  <div class="controls onVideo">
+    <i id="takeScreenshot" class="ion-camera action"></i>
+  </div>
+  <div class="controls onScreenshot hide">
+    <i id="accept" class="ion-checkmark action"></i>
+    <i id="retake" class="ion-close action"></i>
+  </div>
+  <script>
+    let videoElement = null
+    const getVideoElement = () => new Promise(resolve => {
+      videoElement = document.querySelector('video')
+      if (videoElement) {
+        resolve(videoElement);
+        return
+      }
+
+      setTimeout(() => resolve(getVideoElement()), 300)
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+      const screenshotImage = document.getElementById('screenshot')
+      const screenshotButton = document.getElementById('takeScreenshot')
+      const videoControls = document.querySelector('.controls.onVideo')
+      const screenshotControls = document.querySelector('.controls.onScreenshot')
+      const accept = document.getElementById('accept')
+      const retake = document.getElementById('retake')
+
+      const videoScreenshot = (video, canvas) => {
+        const context = canvas.getContext('2d')
+        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+      }
+      const sceneScreenshot = destinationCanvas => {
+        const scene = document.querySelector('a-scene')
+        const {width, height} = destinationCanvas
+        scene.components.screenshot.data.width = width
+        scene.components.screenshot.data.height = height
+        const sceneCanvas = scene.components.screenshot.getCanvas('perspective')
+
+        const context = destinationCanvas.getContext('2d')
+        context.drawImage(sceneCanvas, 0, 0, width, height)
+      }
+      const takeScreenshot = () => getVideoElement().then(video => {
+        console.log(video.style.width, video.style.height, video.style['margin-left'], video.style['margin-top'])
+        console.log(window.innerWidth, window.innerHeight, window.width, window.height)
+        const topOffset = -parseFloat(video.style['margin-top'])
+        const leftOffset = -parseFloat(video.style['margin-left'])
+        const relativeTopOffset = topOffset / parseFloat(video.style.height)
+        const relativeLeftOffset = leftOffset / parseFloat(video.style.width)
+        console.log( leftOffset, relativeLeftOffset, topOffset, relativeTopOffset)
+        const canvas = document.getElementById('screenshotCanvas')
+        const {videoWidth: width, videoHeight: height} = video
+        canvas.width = width
+        canvas.height = height
+        videoScreenshot(video, canvas)
+        sceneScreenshot(canvas)
+
+        const data = canvas.toDataURL('image/png')
+        screenshotImage.setAttribute('src', data)
+      })
+
+      const hide = element => element.className += ' hide'
+      const show = element => { element.className = element.className.replace('hide', '') }
+      
+
+      window.takeScreenshot = takeScreenshot
+      screenshotButton.addEventListener('click', () => {
+        takeScreenshot()
+        show(screenshotImage)
+        hide(videoControls)
+        show(screenshotControls)
+      })
+
+      retake.addEventListener('click', () => {
+        hide(screenshotImage)
+        hide(screenshotControls)
+        show(videoControls)
+      })
+    })
+  </script>
+</body>
