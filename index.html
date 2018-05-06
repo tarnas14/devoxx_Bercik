@@ -92,36 +92,39 @@
       const accept = document.getElementById('accept')
       const retake = document.getElementById('retake')
 
-      const videoScreenshot = (video, canvas) => {
+      const videoScreenshot = (video, canvas, box) => {
         const context = canvas.getContext('2d')
-        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+        context.drawImage(video, box.x, box.y, box.width, box.height, 0, 0, box.width, box.height)
       }
-      const sceneScreenshot = destinationCanvas => {
+      const sceneScreenshot = (destinationCanvas, box) => {
         const scene = document.querySelector('a-scene')
-        const {width, height} = destinationCanvas
+        const {width, height} = box
         scene.components.screenshot.data.width = width
         scene.components.screenshot.data.height = height
         const sceneCanvas = scene.components.screenshot.getCanvas('perspective')
 
         const context = destinationCanvas.getContext('2d')
-        context.drawImage(sceneCanvas, 0, 0, width, height)
+        context.drawImage(sceneCanvas, box.x, box.y, width, height, 0, 0, width, height)
       }
       const takeScreenshot = () => getVideoElement().then(video => {
-        // there is some scaling involved in the AR video, we need to apply the same shit to canvas
-        // console.log(video.style.width, video.style.height, video.style['margin-left'], video.style['margin-top'])
-        // console.log(window.innerWidth, window.innerHeight, window.width, window.height)
+        // there is some scaling involved in the AR video, we need to apply the same logic to canvas
         const topOffset = -parseFloat(video.style['margin-top'])
         const leftOffset = -parseFloat(video.style['margin-left'])
         const relativeTopOffset = topOffset / parseFloat(video.style.height)
         const relativeLeftOffset = leftOffset / parseFloat(video.style.width)
-        console.log( leftOffset, relativeLeftOffset, topOffset, relativeTopOffset)
 
         const canvas = document.getElementById('screenshotCanvas')
         const {videoWidth: width, videoHeight: height} = video
-        canvas.width = width
-        canvas.height = height
-        videoScreenshot(video, canvas)
-        sceneScreenshot(canvas)
+        const box = {
+          x: width*relativeLeftOffset,
+          y: height*relativeTopOffset,
+          width: width*(1-2*relativeLeftOffset),
+          height: height*(1-2*relativeTopOffset)
+        }
+        canvas.width = box.width
+        canvas.height = box.height
+        videoScreenshot(video, canvas, box)
+        sceneScreenshot(canvas, box)
 
         const data = canvas.toDataURL('image/png')
         screenshotImage.setAttribute('src', data)
