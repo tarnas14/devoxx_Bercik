@@ -10,7 +10,7 @@
   <!-- include shadowonly-plane -->
   <script src='./build/aframe-shadow-plane.js'></script>
 
-  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body style='margin : 0px; overflow: hidden;'>
@@ -107,13 +107,15 @@
         context.drawImage(sceneCanvas, 0, 0, width, height)
       }
       const takeScreenshot = () => getVideoElement().then(video => {
-        console.log(video.style.width, video.style.height, video.style['margin-left'], video.style['margin-top'])
-        console.log(window.innerWidth, window.innerHeight, window.width, window.height)
+        // there is some scaling involved in the AR video, we need to apply the same shit to canvas
+        // console.log(video.style.width, video.style.height, video.style['margin-left'], video.style['margin-top'])
+        // console.log(window.innerWidth, window.innerHeight, window.width, window.height)
         const topOffset = -parseFloat(video.style['margin-top'])
         const leftOffset = -parseFloat(video.style['margin-left'])
         const relativeTopOffset = topOffset / parseFloat(video.style.height)
         const relativeLeftOffset = leftOffset / parseFloat(video.style.width)
         console.log( leftOffset, relativeLeftOffset, topOffset, relativeTopOffset)
+
         const canvas = document.getElementById('screenshotCanvas')
         const {videoWidth: width, videoHeight: height} = video
         canvas.width = width
