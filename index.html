@@ -96,15 +96,15 @@
         const context = canvas.getContext('2d')
         context.drawImage(video, box.x, box.y, box.width, box.height, 0, 0, box.width, box.height)
       }
-      const sceneScreenshot = (destinationCanvas, box) => {
+      const sceneScreenshot = (videoCanvas, destinationCanvas, box) => {
         const scene = document.querySelector('a-scene')
-        const {width, height} = box
+        const {width, height} = videoCanvas
         scene.components.screenshot.data.width = width
         scene.components.screenshot.data.height = height
         const sceneCanvas = scene.components.screenshot.getCanvas('perspective')
 
         const context = destinationCanvas.getContext('2d')
-        context.drawImage(sceneCanvas, box.x, box.y, width, height, 0, 0, width, height)
+        context.drawImage(sceneCanvas, box.x, box.y, box.width, box.height, 0, 0, box.width, box.height)
       }
       const takeScreenshot = () => getVideoElement().then(video => {
         // there is some scaling involved in the AR video, we need to apply the same logic to canvas
@@ -121,10 +121,11 @@
           width: width*(1-2*relativeLeftOffset),
           height: height*(1-2*relativeTopOffset)
         }
+        console.log(box)
         canvas.width = box.width
         canvas.height = box.height
         videoScreenshot(video, canvas, box)
-        sceneScreenshot(canvas, box)
+        sceneScreenshot({width, height}, canvas, box)
 
         const data = canvas.toDataURL('image/png')
         screenshotImage.setAttribute('src', data)
