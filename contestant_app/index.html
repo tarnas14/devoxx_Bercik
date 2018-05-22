@@ -142,11 +142,14 @@
         show(screenshotControls)
       })
 
-      retake.addEventListener('click', () => {
+      const backToCamera = () => {
         hide(screenshotImage)
         hide(screenshotControls)
         show(videoControls)
-      })
+      }
+
+
+      retake.addEventListener('click', backToCamera)
 
       accept.addEventListener('click', () => canvas.toBlob(blob => {
         const formData = new FormData()
@@ -157,7 +160,8 @@
           body: formData,
           credentials: 'same-origin',
         })
-        .then(console.log)
+        .then(backToCamera)
+        .catch(console.log)
       }))
     })
   </script>
