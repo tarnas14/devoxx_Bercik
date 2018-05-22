@@ -7,9 +7,8 @@ const credentials = new Map()
 
 module.exports = {
   routes: (app) => {
-    app.get('/auth/login', (req, res) => res.redirect('/auth/twitter'))
-    app.get('/auth/twitter', passport.authenticate('twitter'))
-    app.get('/auth/twitter/callback', passport.authenticate('twitter'), (req, res) => res.redirect('/contestant'))
+    app.get('/auth/login', passport.authenticate('twitter'))
+    app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/auth/login' }), (req, res) => res.redirect('/contestant'))
   },
   setup: (app) => {
     // -- Setting up Passport --
@@ -44,7 +43,7 @@ module.exports = {
       }
 
       if (!req.isAuthenticated || !req.isAuthenticated()) {
-        res.redirect('/auth/login')
+        res.redirect('/')
         return
       }
 

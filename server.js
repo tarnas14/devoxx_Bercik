@@ -16,6 +16,8 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(session({ secret: process.env.SESSION_SECRET }))
 
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))
+
 authentication.setup(app)
 authentication.routes(app)
 
