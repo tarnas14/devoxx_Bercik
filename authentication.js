@@ -2,7 +2,8 @@ const passport = require('passport')
 const TwitterStrategy = require('passport-twitter')
 const Twitter = require('twitter')
 
-const myAmazingDb = new Map() 
+const userProfiles = new Map() 
+const credentials = new Map()
 
 module.exports = {
   routes: (app) => {
@@ -21,14 +22,15 @@ module.exports = {
         console.log('[auth][twitter] authenticated twitter user', token, tokenSecret)
         console.log('[auth][twitter]', profile)
 
-        myAmazingDb.set(profile.id, {profile, creds: {token, tokenSecret}})
+        userProfiles.set(profile.id, profile)
+        credentials.set(profile.id, {token, tokenSecret})
 
-        return cb(null, myAmazingDb.get(profile.id))
+        return cb(null, profile)
       }
     ))
 
-    passport.serializeUser((userData, done) => done(null, userData.profile.id))
-    passport.deserializeUser((id, done) => done(null, myAmazingDb.get(id)))
+    passport.serializeUser((userData, done) => done(null, userData.id))
+    passport.deserializeUser((id, done) => done(null, userProfiles.get(id)))
 
     app.use(passport.initialize())
     app.use(passport.session())
@@ -46,12 +48,12 @@ module.exports = {
         return
       }
 
-
+      const {token, tokenSecret} = credentials.get(req.user.id)
       req.twitterClient = new Twitter({
         consumer_key: process.env.TWITTER_CONSUMER_KEY,
         consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-        access_token_key: req.user.creds.token,
-        access_token_secret: req.user.creds.tokenSecret,
+        access_token_key: token,
+        access_token_secret: tokenSecret,
       })
       next()
     })
