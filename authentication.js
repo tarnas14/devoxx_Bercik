@@ -16,7 +16,7 @@ module.exports = {
     passport.use(new TwitterStrategy({
         consumerKey: process.env.TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-        callbackURL: `http://localhost:${process.env.PORT}/auth/twitter/callback`
+        callbackURL: process.env.TWITTER_CALLBACK
       },
       (token, tokenSecret, profile, cb) => {
         console.log('[auth][twitter] authenticated twitter user', token, tokenSecret)
