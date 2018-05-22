@@ -48,6 +48,9 @@ const promisify = (callbackMethod, ...args) =>
 const upload = multer({dest: 'uploads/'})
 app.post('/api/tweet', upload.single('screenshot'), (req, res) => {
   const image = fs.readFileSync(req.file.path)
+  const statusText = req.body.status.substr(0, 280)
+
+  // TODO make sure both image and status are present
 
   promisify(req.twitterClient.post.bind(req.twitterClient), 'media/upload', {media: image})
     .then((media, response) => {
@@ -57,7 +60,7 @@ app.post('/api/tweet', upload.single('screenshot'), (req, res) => {
     })
     .then(media => {
       const status = {
-        status: 'test tweet',
+        status: statusText,
         media_ids: media.media_id_string
       }
 

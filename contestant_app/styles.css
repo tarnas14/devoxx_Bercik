@@ -46,3 +46,38 @@
 .hide {
   display: none;
 }
+
+#tweetInput {
+  z-index: 9001;
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  padding: 1em;
+  border-radius: 1em;
+  background-color: rgba(0, 0, 0, .7);
+}
+
+#tweetInput > div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#statusText {
+  width: 100%;
+  height: 80%;
+  resize: none;
+}
+
+#tweetInput button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#counter {
+  text-align: right;
+  color: white;
+}

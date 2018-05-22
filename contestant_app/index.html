@@ -73,6 +73,13 @@
     <i id="accept" class="ion-checkmark action"></i>
     <i id="retake" class="ion-close action"></i>
   </div>
+  <div id="tweetInput" class="hide">
+    <div>
+      <textarea id="statusText" placeholder="your tweet here, remember to add hashtags #devoxx #voucherify"></textarea>
+      <div id="counter">0/280</div>
+      <button id="tweet">Tweet</button>
+    </div>
+  </div>
   <script>
     let videoElement = null
     const getVideoElement = () => new Promise(resolve => {
@@ -92,6 +99,10 @@
       const accept = document.getElementById('accept')
       const retake = document.getElementById('retake')
       const canvas = document.getElementById('screenshotCanvas')
+      const tweetInput = document.getElementById('tweetInput')
+      const statusText = document.getElementById('statusText')
+      const tweet = document.getElementById('tweet')
+      const counter = document.getElementById('counter')
 
       const videoScreenshot = (video, canvas, box) => {
         const context = canvas.getContext('2d')
@@ -131,7 +142,7 @@
         screenshotImage.setAttribute('src', imageData)
       })
 
-      const hide = element => element.className += ' hide'
+      const hide = element => { element.className = element.className.includes('hide') ? element.className : `${element.className} hide` }
       const show = element => { element.className = element.className.replace('hide', '') }
 
       window.takeScreenshot = takeScreenshot
@@ -145,14 +156,41 @@
       const backToCamera = () => {
         hide(screenshotImage)
         hide(screenshotControls)
+        hide(tweetInput)
+        statusText.value = ''
         show(videoControls)
       }
 
-
       retake.addEventListener('click', backToCamera)
 
-      accept.addEventListener('click', () => canvas.toBlob(blob => {
+      accept.addEventListener('click', () => {
+        show(tweetInput)
+      })
+
+      const OUR_PREFIX = '#devoxx #voucherify ' // #hashtags
+
+      statusText.addEventListener('keydown', () => {
+        if (!statusText.value.length) {
+          statusText.value = OUR_PREFIX
+        }
+      })
+
+      statusText.addEventListener('keyup', () => {
+        if (statusText.value.length > 280) {
+          counter.innerHTML = `your tweet will be truncated! ${statusText.value.length}/280`
+          counter.style.color = 'red'
+          return
+        }
+
+        counter.innerHTML = `${statusText.value.length}/280`
+        counter.style.color = 'white'
+      })
+
+      tweet.addEventListener('click', () => canvas.toBlob(blob => {
+        statusText.disabled = true
+        tweet.disabled = true
         const formData = new FormData()
+        formData.append('status', statusText.value)
         formData.append('screenshot', blob)
 
         fetch('/api/tweet', {
