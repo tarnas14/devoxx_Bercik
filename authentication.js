@@ -1,5 +1,6 @@
 const passport = require('passport')
 const TwitterStrategy = require('passport-twitter')
+const Twitter = require('twitter')
 
 const myAmazingDb = new Map() 
 
@@ -45,6 +46,13 @@ module.exports = {
         return
       }
 
+
+      req.twitterClient = new Twitter({
+        consumer_key: process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+        access_token_key: req.user.creds.token,
+        access_token_secret: req.user.creds.tokenSecret,
+      })
       next()
     })
   },

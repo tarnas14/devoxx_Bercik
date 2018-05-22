@@ -91,6 +91,7 @@
       const screenshotControls = document.querySelector('.controls.onScreenshot')
       const accept = document.getElementById('accept')
       const retake = document.getElementById('retake')
+      const canvas = document.getElementById('screenshotCanvas')
 
       const videoScreenshot = (video, canvas, box) => {
         const context = canvas.getContext('2d')
@@ -113,7 +114,6 @@
         const relativeTopOffset = topOffset / parseFloat(video.style.height)
         const relativeLeftOffset = leftOffset / parseFloat(video.style.width)
 
-        const canvas = document.getElementById('screenshotCanvas')
         const {videoWidth: width, videoHeight: height} = video
         const box = {
           x: width*relativeLeftOffset,
@@ -127,13 +127,12 @@
         videoScreenshot(video, canvas, box)
         sceneScreenshot({width, height}, canvas, box)
 
-        const data = canvas.toDataURL('image/png')
-        screenshotImage.setAttribute('src', data)
+        const imageData = canvas.toDataURL('image/png')
+        screenshotImage.setAttribute('src', imageData)
       })
 
       const hide = element => element.className += ' hide'
       const show = element => { element.className = element.className.replace('hide', '') }
-      
 
       window.takeScreenshot = takeScreenshot
       screenshotButton.addEventListener('click', () => {
@@ -148,6 +147,18 @@
         hide(screenshotControls)
         show(videoControls)
       })
+
+      accept.addEventListener('click', () => canvas.toBlob(blob => {
+        const formData = new FormData()
+        formData.append('screenshot', blob)
+
+        fetch('/api/tweet', {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin',
+        })
+        .then(console.log)
+      }))
     })
   </script>
 </body>
