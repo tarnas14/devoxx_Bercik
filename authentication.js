@@ -37,7 +37,7 @@ module.exports = {
     // -- Setting up middleware for all views of the website --
     app.use((req, res, next) => {
       // Whitelist
-      if (req.path.startsWith('/auth')) {
+      if (req.path.startsWith('/auth') || req.path.startsWith('/static')) {
         next()
         return
       }

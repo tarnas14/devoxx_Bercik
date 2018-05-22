@@ -1,0 +1,30 @@
+body {
+  text-align: center;
+  padding-bottom: 5em;
+}
+
+body section:first-child {
+  width: 100%;
+}
+
+header > img {
+  display: inline-block;
+  height: 40vh;
+}
+
+img {
+  max-width: 100%;
+}
+
+#ctaContainer {
+  line-height: 300%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#ctaContainer > a {
+  padding: 29px;
+  background-color: white;
+}

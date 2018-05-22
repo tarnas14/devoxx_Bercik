@@ -16,6 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(session({ secret: process.env.SESSION_SECRET }))
 
+app.get('/static/styles.css', (req, res) => res.sendFile(path.join(__dirname, './static/styles.css')))
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))
 
 authentication.setup(app)
