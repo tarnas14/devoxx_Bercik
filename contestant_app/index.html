@@ -67,18 +67,21 @@
   <img id="screenshot" src="" class="hide"/>
   <canvas id="screenshotCanvas" class="hide"></canvas>
   <div class="controls onVideo">
-    <i id="takeScreenshot" class="ion-camera action"></i>
+    <i id="takeScreenshot" class="icon ion-camera action"></i>
   </div>
   <div class="controls onScreenshot hide">
-    <i id="accept" class="ion-checkmark action"></i>
-    <i id="retake" class="ion-close action"></i>
+    <i id="accept" class="icon ion-checkmark action"></i>
+    <i id="retake" class="icon ion-close action"></i>
   </div>
   <div id="tweetInput" class="hide">
     <div>
-      <textarea id="statusText" placeholder="your tweet here, remember to add hashtags #devoxx #voucherify"></textarea>
+      <textarea id="statusText" placeholder="your tweet here, remember to add hashtags #devoxx #voucherify"></textarea><!-- #hashtags -->
       <div id="counter">0/280</div>
       <button id="tweet">Tweet</button>
     </div>
+  </div>
+  <div id="loader" class="hide">
+    <i class="icon ion-refresh"></i>
   </div>
   <script>
     let videoElement = null
@@ -103,6 +106,7 @@
       const statusText = document.getElementById('statusText')
       const tweet = document.getElementById('tweet')
       const counter = document.getElementById('counter')
+      const loader = document.getElementById('loader')
 
       const videoScreenshot = (video, canvas, box) => {
         const context = canvas.getContext('2d')
@@ -132,7 +136,6 @@
           width: width*(1-2*relativeLeftOffset),
           height: height*(1-2*relativeTopOffset)
         }
-        console.log(box)
         canvas.width = box.width
         canvas.height = box.height
         videoScreenshot(video, canvas, box)
@@ -192,14 +195,18 @@
         const formData = new FormData()
         formData.append('status', statusText.value)
         formData.append('screenshot', blob)
+        show(loader)
 
         fetch('/api/tweet', {
           method: 'POST',
           body: formData,
           credentials: 'same-origin',
         })
-        .then(backToCamera)
-        .catch(console.log)
+          .then(() => {
+            hide(loader)
+            backToCamera()
+          })
+          .catch(console.log)
       }))
     })
   </script>

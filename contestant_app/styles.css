@@ -28,10 +28,13 @@
   }
 }
 
-.action {
-  cursor: pointer;
+.icon {
   color: white;
   font-size: 3em;
+}
+
+.action {
+  cursor: pointer;
 }
 
 #screenshot {
@@ -81,3 +84,18 @@
   text-align: right;
   color: white;
 }
+
+#loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 9002;
+  animation: spin 4s linear infinite;
+}
+
+#loader i {
+  color: black;
+  opacity: .8;
+}
+
+@keyframes spin { 100% { transform:rotate(360deg); } }
