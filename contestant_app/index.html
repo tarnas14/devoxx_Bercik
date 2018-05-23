@@ -83,6 +83,7 @@
   <div id="loader" class="hide">
     <i class="icon ion-refresh"></i>
   </div>
+  <div id="message" class="hide"></div>
   <script>
     let videoElement = null
     const getVideoElement = () => new Promise(resolve => {
@@ -204,10 +205,30 @@
         })
           .then(() => {
             hide(loader)
+            message('success', 'Nice! Keep it up, go get them all!')
             backToCamera()
           })
-          .catch(console.log)
+          .catch(error => {
+            hide(loader)
+            message('error', 'Whoops, something went wrong, try again in a sec!')
+            backToCamera()
+          })
       }))
+
+      function message(style, text, hideAfter = 2000) {
+        const messageContainer = document.getElementById('message')
+
+        messageContainer.className += ' ' + style
+        messageContainer.innerHTML = text
+
+        show(messageContainer)
+
+        setTimeout(() => {
+          hide(messageContainer)
+          messageContainer.className = messageContainer.replace(style, '')
+          messageContainer.innerHTML = ''
+        }, hideAfter)
+      }
     })
   </script>
 </body>
