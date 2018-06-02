@@ -1,30 +1,90 @@
 body {
-  text-align: center;
-  padding-bottom: 5em;
+  margin: 0;
+  font-family: Lato, Helvetica, Arial, Sans-Serif;
+  padding-bottom: 3em;
+  color: #1d1e22;
 }
 
-body section:first-child {
-  width: 100%;
+@media (max-width: 500px) and (orientation: portrait) {
+  header {
+    padding-top: 1em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-image: url(https://uploads-ssl.webflow.com/58fe5d0657dd045f17ae2345/5ab8b5e81f33703ce8d722ff_voucherify_index_v2_01.png);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+  }
+
+  header h2 {
+    margin: 0;
+    line-height: 1.5;
+    margin-bottom: .5em;
+    color: white;
+    text-align: center;
+  }
+
+  header a {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  header a img {
+    height: 4vh;
+  }
+
+  #hubert {
+    display: inline-block;
+    width: 48vw;
+  }
+
+  main {
+  }
+
+  ol {
+    font-size: 1.4em;
+    padding-right: .5em;
+  }
+
+  ol li {
+    line-height: 1.9;
+  }
+
+  ol img {
+    display: block;
+    max-width: 3.5em;
+    max-height: 3.5em;
+  }
+
+  #ctaContainer {
+    line-height: 2.3em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    padding: .7em 0;
+    background-image: url(https://uploads-ssl.webflow.com/58fe5d0657dd045f17ae2345/5ab8b5e81f33703ce8d722ff_voucherify_index_v2_01.png);
+  }
+
+  #ctaContainer .action {
+    padding: 0 2em;
+    color: white;
+    border-radius: 1.3em;
+    text-decoration: none;
+  }
+
+  .action.details {
+    background-color: black;
+  }
+
+  .action.start {
+    background-color: #b929a2;
+  }
 }
 
-header > img {
-  display: inline-block;
-  height: 40vh;
-}
-
-img {
-  max-width: 100%;
-}
-
-#ctaContainer {
-  line-height: 300%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-#ctaContainer > a {
-  padding: 29px;
-  background-color: white;
-}
