@@ -5,9 +5,33 @@ body {
   color: #1d1e22;
 }
 
-@media (max-width: 500px) and (orientation: portrait) {
+#marker {
+  display: block;
+  max-width: 3.5em;
+  max-height: 3.5em;
+}
+
+#ctaContainer .action {
+  color: white;
+  text-decoration: none;
+}
+
+.action.details {
+  background-color: black;
+}
+
+.action.start {
+  background-color: #b929a2;
+}
+
+
+@media (orientation: portrait) {
+  body {
+    font-size: 2.5vh;
+  }
+
   header {
-    padding-top: 1em;
+    padding-top: 1rem;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: white;
@@ -18,21 +42,22 @@ body {
     position: relative;
   }
 
-  header h2 {
+  header h1 {
+    font-size: 1.6em;
     margin: 0;
     line-height: 1.5;
-    margin-bottom: .5em;
+    margin-bottom: .5rem;
     color: white;
     text-align: center;
   }
 
-  header a {
+  #voucherify {
     position: absolute;
     top: 0;
     left: 0;
   }
 
-  header a img {
+  #voucherify img {
     height: 4vh;
   }
 
@@ -41,26 +66,21 @@ body {
     width: 48vw;
   }
 
-  main {
+  main h1 {
+    display: none;
   }
 
   ol {
-    font-size: 1.4em;
-    padding-right: .5em;
+    padding: 0;
+    margin-left: 9vw;
   }
 
   ol li {
-    line-height: 1.9;
-  }
-
-  ol img {
-    display: block;
-    max-width: 3.5em;
-    max-height: 3.5em;
+    line-height: 2;
   }
 
   #ctaContainer {
-    line-height: 2.3em;
+    line-height: 7vh;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -68,23 +88,92 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: space-evenly;
-    padding: .7em 0;
+    padding: 2vh 0;
+    background-color: white;
     background-image: url(https://uploads-ssl.webflow.com/58fe5d0657dd045f17ae2345/5ab8b5e81f33703ce8d722ff_voucherify_index_v2_01.png);
   }
 
   #ctaContainer .action {
-    padding: 0 2em;
-    color: white;
-    border-radius: 1.3em;
-    text-decoration: none;
-  }
-
-  .action.details {
-    background-color: black;
-  }
-
-  .action.start {
-    background-color: #b929a2;
+    padding: 0 10vw;
+    font-size: 2.5vh;
+    border-radius: 4vh;
   }
 }
 
+
+@media (orientation: landscape) {
+  body {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-image: url(https://uploads-ssl.webflow.com/58fe5d0657dd045f17ae2345/5ab8b5e81f33703ce8d722ff_voucherify_index_v2_01.png);
+  }
+
+  header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 40vw;
+  }
+
+  main {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60vw;
+  }
+
+  main h1 {
+    text-align: center;
+  }
+
+  header h1 {
+    display: none;
+  }
+
+  #voucherify {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #voucherify img {
+    height: 7vh;
+  }
+
+  #hubert {
+    width: 63vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+
+  #ctaContainer {
+    line-height: 10vh;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    padding: .7em 0;
+    width: 60vw;
+  }
+
+  #ctaContainer .action {
+    padding: 0 5vw;
+    font-size: 5vh;
+    border-radius: 4vh;
+  }
+
+  ol {
+    font-size: 6vh;
+    padding-right: .5em;
+  }
+
+  ol li {
+    line-height: 1.8;
+  }
+}
