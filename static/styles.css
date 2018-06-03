@@ -5,6 +5,10 @@ body {
   color: #1d1e22;
 }
 
+a {
+  color: #b929a2;
+}
+
 #marker {
   display: block;
   max-width: 3.5em;
@@ -16,16 +20,16 @@ body {
   text-decoration: none;
 }
 
-.action.details {
+.action {
   background-color: black;
 }
 
-.action.start {
+.action.cta {
   background-color: #b929a2;
 }
 
 img {
-  max-width: 100%;
+  max-width: 90vw;
 }
 
 @media (orientation: portrait) {
@@ -69,16 +73,21 @@ img {
     width: 48vw;
   }
 
+  main {
+    padding-bottom: 5vh;
+  }
+
   main h1 {
     display: none;
   }
 
-  ol {
+  ol, ul {
     padding: 0;
+    padding-right: 4vw;
     margin-left: 9vw;
   }
 
-  ol li {
+  ol, ul {
     line-height: 2;
   }
 
@@ -131,6 +140,7 @@ img {
     top: 0;
     right: 0;
     width: 60vw;
+    padding-bottom: 15vh;
   }
 
   main h1 {
@@ -181,7 +191,7 @@ img {
     padding-right: .5em;
   }
 
-  ol li {
+  ol, ul {
     line-height: 1.8;
   }
 }
