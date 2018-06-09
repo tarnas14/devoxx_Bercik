@@ -7,6 +7,8 @@ body {
 
 a {
   color: #b929a2;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 #marker {
@@ -34,7 +36,7 @@ img {
 
 @media (orientation: portrait) {
   body {
-    font-size: 2.5vh;
+    font-size: 3vh;
   }
 
   header {
@@ -50,7 +52,7 @@ img {
   }
 
   header h1 {
-    font-size: 1.6em;
+    font-size: 1.4em;
     margin: 0;
     line-height: 1.5;
     margin-bottom: .5rem;
@@ -75,10 +77,6 @@ img {
 
   main {
     padding-bottom: 5vh;
-  }
-
-  main h1 {
-    display: none;
   }
 
   ol, ul {
@@ -143,10 +141,6 @@ img {
     padding-bottom: 15vh;
   }
 
-  main h1 {
-    text-align: center;
-  }
-
   header h1 {
     display: none;
   }
@@ -187,8 +181,20 @@ img {
   }
 
   ol {
-    font-size: 6vh;
+    font-size: 5.7vh;
     padding-right: .5em;
+  }
+
+  #details ul, p {
+    font-size: 5vh;
+  }
+  
+  #details h2 {
+    text-decoration: underline;
+  }
+  
+  #details #mapToVoucherify {
+    width: 60vw;
   }
 
   ol, ul {
