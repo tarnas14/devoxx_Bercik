@@ -4,8 +4,6 @@
 
   <!-- include ar.js for aframe -->
   <script src='./build/aframe-ar-master.js'></script>
-  <!-- include shadowonly-plane -->
-  <script src='./build/aframe-shadow-plane.js'></script>
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
   <link rel="stylesheet" href="./styles.css">
@@ -16,9 +14,10 @@
     <a-assets>
       <a-asset-item id='bercik-obj' src='./models/smoothHubert/bercik.obj'></a-asset-item>
       <a-asset-item id='bercik-mtl' src='./models/smoothHubert/bercik.mtl'></a-asset-item>
+      <!-- <a-asset-item id='bercik-mtl' src='./models/little-fox/materials.mtl'></a-asset-item> -->
     </a-assets>		
 		<!-- Create a anchor to attach your augmented reality -->
-		<a-anchor hit-testing-enabled='true' shadow='type: pcfsoft'>
+		<a-anchor hit-testing-enabled='true'>
       <a-entity obj-model="obj: #bercik-obj; mtl: #bercik-mtl" scale="0.1 0.1 0.1"></a-entity>
 		</a-anchor>
 		<!-- Define a static camera -->
