@@ -12,13 +12,14 @@
 	<!-- Define your scene -->
 	<a-scene antialias="true" embedded arjs='trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: false">
     <a-assets>
-      <a-asset-item id='bercik-obj' src='./models/smoothHubert/bercik.obj'></a-asset-item>
-      <a-asset-item id='bercik-mtl' src='./models/smoothHubert/bercik.mtl'></a-asset-item>
-      <!-- <a-asset-item id='bercik-mtl' src='./models/little-fox/materials.mtl'></a-asset-item> -->
+      <a-asset-item id='bercik-obj' src='./models/smoothHubert/bercik2.obj'></a-asset-item>
+      <a-asset-item id='bercik-mtl' src='./models/smoothHubert/bercik2.mtl'></a-asset-item>
+      <!-- <a-asset-item id='bercik-dae' src='./models/smoothHubert/bercik2.dae'></a-asset-item> -->
     </a-assets>		
 		<!-- Create a anchor to attach your augmented reality -->
 		<a-anchor hit-testing-enabled='true'>
       <a-entity obj-model="obj: #bercik-obj; mtl: #bercik-mtl" scale="0.1 0.1 0.1"></a-entity>
+      <!-- <a-entity collada-model="#bercik-dae" scale="0.1 0.1 0.1"></a-entity> -->
 		</a-anchor>
 		<!-- Define a static camera -->
 		<a-camera-static/>
