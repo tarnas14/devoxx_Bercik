@@ -206,3 +206,11 @@ img {
     line-height: 1.8;
   }
 }
+
+.hide {
+  display: none;
+}
+
+#mediaDevicesMissing {
+  padding: .5em .3em;
+}

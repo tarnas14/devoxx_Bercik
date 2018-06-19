@@ -18,9 +18,33 @@
         <li>Enter our lottery to win an <a href="https://www.apple.com/lae/apple-watch-nike/">Apple Watch Nike+ 42mm</a> <!-- prizePool --></li>
       </ol>
     </main>
+    <main id="mediaDevicesMissing" class="hide">
+      <h2>FEATURES MISSING</h2>
+      <p class="lead">It appears <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/mediaDevices">navigator.mediaDevices</a> is missing in your browser</p>
+      <p>If you are on iOS 11+, please use this app with the Safari browser.</p>
+      <p>On android, you should be good to go with latest <a href="https://play.google.com/store/apps/details?id=com.android.chrome">chrome</a> or <a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">firefox</a></p>
+      <p>If you think you meet all the requirements and the app still doesn't work, <a href="/details/#contact">let us know</a>. We will try to fix it with your help!</p>
+    </main>
     <div id="ctaContainer">
       <a href="/details" class="action">details</a>
       <a href="/auth/login" class="action cta">start</a>
     </div>
+    <script>
+      if (!location.hostname.startsWith('localhost') && location.protocol !== 'https:')
+      {
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+      }
+
+      const showNoticeAboutMissingFeatures = () => {
+        document.querySelector('main').className = 'hide'
+        document.getElementById("mediaDevicesMissing").className = ''
+      }
+
+      window.showNoticeAboutMissingFeatures = showNoticeAboutMissingFeatures
+
+      if (!navigator.mediaDevices) {
+        showNoticeAboutMissingFeatures()
+      }
+    </script>
   </body>
 </html>

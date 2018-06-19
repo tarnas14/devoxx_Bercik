@@ -119,3 +119,35 @@
 #message.error {
   background-color: red;
 }
+
+body {
+  font-size: 3vh;
+}
+
+#mediaDevicesMissing {
+  padding: 1em;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  z-index: -300;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-image: url(https://uploads-ssl.webflow.com/58fe5d0657dd045f17ae2345/5ab8b5e81f33703ce8d722ff_voucherify_index_v2_01.png);
+}
+
+#cameraAccessNotice {
+  position: fixed;
+  z-index: -288;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 1em;
+}

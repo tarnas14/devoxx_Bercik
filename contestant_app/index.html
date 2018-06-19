@@ -1,14 +1,29 @@
 <head>
   <!-- include a-frame -->
-  <script src='./vendor/aframe/build/aframe-v0.8.2.min.js'></script>
-
-  <!-- include ar.js for aframe -->
-  <script src='./build/aframe-ar-master.js'></script>
+  <script defer>
+    if (!location.hostname.startsWith('localhost') && location.protocol !== 'https:')
+    {
+      location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    }
+  </script>
+  <script id="aframe" src='./vendor/aframe/build/aframe-v0.8.2.min.js'></script>
+  <script id="aframe-ar" src='./build/aframe-ar-master.js'></script>
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body style='margin : 0px; overflow: hidden;'>
+  <main id="mediaDevicesMissing" class="hide">
+    <h2>FEATURES MISSING</h2>
+    <p class="lead">It appears <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/mediaDevices">navigator.mediaDevices</a> is missing in your browser</p>
+    <p>If you are on iOS 11+, please use this app with the Safari browser.</p>
+    <p>On android, you should be good to go with latest <a href="https://play.google.com/store/apps/details?id=com.android.chrome">chrome</a> or <a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">firefox</a></p>
+    <p>If you think you meet all the requirements and the app still doesn't work, <a href="/details/#contact">let us know</a>. We will try to fix it with your help!</p>
+  </main>
+  <div id="cameraAccessNotice">
+    <p>Kindly allow camera access when prompted - the application needs access to the camera<p>
+    <p>Also remember that camera access is not allowed in browser private mode, so the app won't work there.<p>
+  </div>
 	<!-- Define your scene -->
 	<a-scene antialias="true" embedded arjs='trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: false">
     <a-assets>
@@ -44,6 +59,18 @@
     <i class="icon ion-refresh"></i>
   </div>
   <div id="message" class="hide"></div>
+  <script defer>
+    const showNoticeAboutMissingFeatures = () => {
+      document.querySelector('main').className = 'hide'
+      document.getElementById("mediaDevicesMissing").className = ''
+    }
+
+    window.showNoticeAboutMissingFeatures = showNoticeAboutMissingFeatures
+
+    if (!navigator.mediaDevices) {
+      showNoticeAboutMissingFeatures()
+    }
+  </script>
   <script>
     let videoElement = null
     const getVideoElement = () => new Promise(resolve => {
