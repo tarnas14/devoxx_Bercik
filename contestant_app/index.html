@@ -179,7 +179,7 @@
 
       accept.addEventListener('click', () => canvas.toBlob(blob => {
         statusText.disabled = true
-        tweet.disabled = true
+        accept.disabled = true
         const formData = new FormData()
         formData.append('status', statusText.value)
         formData.append('screenshot', blob)
@@ -191,11 +191,13 @@
           credentials: 'same-origin',
         })
           .then(() => {
+            accept.disabled = false
             hide(loader)
             message('success', 'Nice! We tweeted the photo on your behalf, have a nice day!')
             backToCamera()
           })
           .catch(error => {
+            accept.disabled = false
             hide(loader)
             message('error', 'Whoops, something went wrong, try again in a sec!')
             backToCamera()
