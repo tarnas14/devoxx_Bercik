@@ -152,10 +152,6 @@
 
       retake.addEventListener('click', backToCamera)
 
-      accept.addEventListener('click', () => {
-        show(tweetInput)
-      })
-
       const OUR_PREFIX = '#DevoxxMeetsHubert ' // #hashtags
 
       statusText.addEventListener('keydown', () => {
@@ -175,7 +171,7 @@
         counter.style.color = 'white'
       })
 
-      tweet.addEventListener('click', () => canvas.toBlob(blob => {
+      accept.addEventListener('click', () => canvas.toBlob(blob => {
         statusText.disabled = true
         tweet.disabled = true
         const formData = new FormData()
