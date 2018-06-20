@@ -49,7 +49,7 @@ const promisify = (callbackMethod, ...args) =>
 const upload = multer({dest: 'uploads/'})
 app.post('/api/tweet', upload.single('screenshot'), (req, res) => {
   const image = fs.readFileSync(req.file.path)
-  const statusText = req.body.status.substr(0, 280) || '#DevoxxMeetsHubert' // #hashtags
+  const statusText = req.body.status.substr(0, 280) || '#DevoxxMeetsHubert #DevoxxPL #Devoxx' // #hashtags
 
   // TODO make sure both image and status are present
 
