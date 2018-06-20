@@ -71,6 +71,7 @@
   </script>
   <script>
     let videoElement = null
+    const portraitMode = () => window.matchMedia('(orientation: portrait)').matches
     const getVideoElement = () => new Promise(resolve => {
       videoElement = document.querySelector('video')
       if (videoElement) {
@@ -106,7 +107,12 @@
         const sceneCanvas = scene.components.screenshot.getCanvas('perspective')
 
         const context = destinationCanvas.getContext('2d')
-        context.drawImage(sceneCanvas, box.x, box.y, box.width, box.height, 0, 0, box.width, box.height)
+        if (portraitMode()) {
+          // context.drawImage(sceneCanvas, box.x, box.y, box.width, box.height, -(1.7*box.width*0.2), 0, 1.7*box.width, box.height)
+          context.drawImage(sceneCanvas, box.x, box.y, box.width, box.height, -(box.width/box.height * box.width*0.55), 0, 1.7*box.width, box.height)
+          return
+        }
+        context.drawImage(sceneCanvas, box.x, box.y, box.width, box.height, -box.x, 0, box.width, box.height)
       }
       const takeScreenshot = () => getVideoElement().then(video => {
         // there is some scaling involved in the AR video, we need to apply the same logic to canvas
@@ -186,7 +192,7 @@
         })
           .then(() => {
             hide(loader)
-            message('success', 'Nice! Keep it up, go get them all!')
+            message('success', 'Nice! We tweeted the photo on your behalf, have a nice day!')
             backToCamera()
           })
           .catch(error => {
@@ -196,7 +202,7 @@
           })
       }))
 
-      function message(style, text, hideAfter = 2000) {
+      function message(style, text, hideAfter = 15000) {
         const messageContainer = document.getElementById('message')
 
         messageContainer.className += ' ' + style
