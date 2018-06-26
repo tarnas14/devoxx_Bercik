@@ -3,6 +3,8 @@
 This is a PoC application of web-based augmented reality. 
 It aims to show how easy it is to use your phone as an AR device.
 
+See it live on [glitch](https://meet-hubert.glitch.me/) (press start to go to the AR app).
+
 The 3D model is Hubert, [https://voucherify.io](voucherify.io) mascot, prepared by [Mateusz Mrowiec](https://github.com/Haggus).
 
 It uses:
